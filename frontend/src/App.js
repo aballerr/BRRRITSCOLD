@@ -8,6 +8,7 @@ const Container = styled.div`
   width: 97%;
   margin-left: auto;
   margin-right: auto;
+  overflow-y: scroll;
 `;
 
 class App extends Component {

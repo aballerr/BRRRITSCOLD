@@ -19,6 +19,7 @@ const CustomTextField = ({ classes, onChange, label, value, adornmentType }) => 
         InputProps={{
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
         }}
+        type="number"
         className={classes.root}
         label={label}
         value={value}
@@ -28,6 +29,7 @@ const CustomTextField = ({ classes, onChange, label, value, adornmentType }) => 
   } else if (adornmentType === '%') {
     return (
       <TextField
+        type="number"
         InputProps={{
           endAdornment: <InputAdornment position="start">%</InputAdornment>,
         }}

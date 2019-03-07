@@ -1,98 +1,73 @@
 import React, { Component } from 'react';
-import CustomTextField from './CustomTextField';
 import { Provider } from 'mobx-react';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import styled from 'styled-components';
-import Todo from '../../todo';
-import Test from './test';
-import TestDos from './test2';
-import { inject, observer } from 'mobx-react';
+import { Button } from '@material-ui/core';
+import PropertyStore from '../../Stores/PropertyStore';
+import PropertyValue from './CalculatePageComponents/PropertyValue';
+import AnnualExpenses from './CalculatePageComponents/AnnualExpenses';
+import MontlyExpenses from './CalculatePageComponents/MontlyExpenses';
+import Income from './CalculatePageComponents/Income';
+import PropertInformation from './PropertyInformation/PropertyInformation';
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  max-width: 300px;
+  margin: 0;
+  padding: 0;
 `;
-// @inject('Todo')
-// @observer
+
 class CalculatorPage extends Component {
   constructor() {
     super();
+    this.propertyStore = new PropertyStore();
     this.state = {
-      propertyValue: '100,000',
-      purchasePrice: '80,000',
-      downPayment: 25,
-      hasDownPayment: true,
-      interestRate: 5.0,
-      loanTerm: 30,
-      closingCosts: 3000,
+      showPropertyInformation: false,
     };
-
-    this.todo = new Todo();
   }
-
-  renderLoanInputs = () => {
-    return (
-      <>
-        <CustomTextField
-          adornmentType="%"
-          label="Down Payment"
-          value={this.state.downPayment}
-          onChange={this.handleChange('downPayment')}
-        />
-        <CustomTextField
-          adornmentType="%"
-          label="Interest Rate"
-          value={this.state.interestRate}
-          onChange={this.handleChange('interestRate')}
-        />
-        <CustomTextField label="Loan Term" value={this.state.loanTerm} onChange={this.handleChange('loanTerm')} />
-      </>
-    );
-  };
 
   handleChange = key => event => {
     if (key === 'hasDownPayment') this.setState(prevState => ({ hasDownPayment: !prevState.hasDownPayment }));
     else this.setState({ [key]: event.target.value });
   };
 
+  calculate = () => {
+    let res = this.propertyStore.calculateReturns();
+    console.log(`The yearly return is: ${res.annualCashFlow}`);
+    console.log(`The monthly cash flow is: ${res.monthlyCashFlow}`);
+  };
+
   render() {
-    const { hasDownPayment } = this.state;
+    const { showPropertyInformation } = this.state;
 
     return (
       <Container>
-        <Provider Todo={this.todo}>
+        <Provider PropertyStore={this.propertyStore}>
           <>
-            <Test />
-            <TestDos />
+            {showPropertyInformation ? (
+              <PropertInformation PropertyStore={this.propertyStore} />
+            ) : (
+              <div>
+                <div style={{ marginTop: 40, display: 'flex' }}>
+                  <div style={{}} />
+                  <PropertyValue PropertyStore={this.propertyStore} />
+                  <AnnualExpenses PropertyStore={this.propertyStore} />
+                  <Income PropertyStore={this.propertyStore} />
+                  <MontlyExpenses PropertyStore={this.propertyStore} />
+                </div>
+                <div>
+                  <button onClick={this.calculate}>Calculate</button>
+                </div>
+              </div>
+            )}
+            <Button
+              color="primary"
+              variant="contained"
+              style={{ position: 'absolute', top: 70, left: 20, width: 350, height: 30, outline: 'none' }}
+              onClick={e => this.setState(prevState => ({ showPropertyInformation: !prevState.showPropertyInformation }))}
+            >
+              {showPropertyInformation ? 'Show Calculator' : 'Show Information'}
+            </Button>
           </>
         </Provider>
-        {/* <TextField label="Property Value" value={this.state.propertyValue} onChange={this.handleChange('propertyValue')} /> */}
-        {/* <TextField label="Purchase Price" value={this.state.purchasePrice} onChange={this.handleChange('purchasePrice')} /> */}
-        {/* <CustomTextField
-          adornmentType="$"
-          label="Property Value"
-          value={this.state.propertyValue}
-          onChange={this.handleChange('propertyValue')}
-        />
-        <CustomTextField
-          adornmentType="$"
-          label="Purchase Price"
-          value={this.state.purchasePrice}
-          onChange={this.handleChange('purchasePrice')}
-        />
-        <FormControlLabel
-          control={<Switch checked={this.state.hasDownPayment} onChange={this.handleChange('hasDownPayment')} value="hasDownPayment" />}
-          label="Using a loan?"
-        />
-        {hasDownPayment ? this.renderLoanInputs() : null}
-        <CustomTextField
-          adornmentType="$"
-          label="Closing Costs"
-          value={this.state.closingCosts}
-          onChange={this.handleChange('closingCosts')}
-        /> */}
       </Container>
     );
   }

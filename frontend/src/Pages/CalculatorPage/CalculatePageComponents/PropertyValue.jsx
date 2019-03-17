@@ -8,13 +8,13 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-// @observable purchasePrice = 100000;
-// @observable afterRepairValue = 120000;
-// @observable downPayment = 20;
-// @observable interestRate = 4.5;
-// @observable loanTerm = 30;
-// @observable closingCosts = 3000;
-// @observable repairCosts = 1000;
+// @observable purchase_price = 100000;
+// @observable after_repair_value = 120000;
+// @observable down_payment = 20;
+// @observable interest_rate = 4.5;
+// @observable loan_term = 30;
+// @observable closing_costs = 3000;
+// @observable repair_costs = 1000;
 // @observable propertyTax = 1500;
 // @observable totalInsurace = 800;
 // @observable hoaFee = 0;
@@ -26,63 +26,63 @@ class PropertyValue extends Component {
   render() {
     const { PropertyStore } = this.props;
     const {
-      purchasePrice,
-      afterRepairValue,
-      downPayment,
-      interestRate,
-      loanTerm,
-      closingCosts,
-      repairCosts,
-      totalInsurance,
+      purchase_price,
+      after_repair_value,
+      down_payment,
+      interest_rate,
+      loan_term,
+      closing_costs,
+      repair_costs,
+      total_insurance,
       setState,
     } = PropertyStore;
-    console.log(totalInsurance);
+    console.log(total_insurance);
 
     return (
       <Container>
         <h4>Purchase</h4>
         <CustomTextField
-          value={purchasePrice}
+          value={purchase_price}
           label="Purchase Price"
           adornmentType="$"
-          onChange={e => setState('purchasePrice', e.target.value)}
+          onChange={e => setState('purchase_price', e.target.value)}
         />
         <CustomTextField
-          value={afterRepairValue}
+          value={after_repair_value}
           label="After Repair Value"
           adornmentType="$"
-          onChange={e => setState('afterRepairValue', e.target.value)}
+          onChange={e => setState('after_repair_value', e.target.value)}
         />
         <CustomTextField
-          value={downPayment}
+          value={down_payment}
           label="Down Payment"
           adornmentType="%"
-          onChange={e => setState('downPayment', e.target.value)}
+          onChange={e => setState('down_payment', e.target.value)}
         />
         <CustomTextField
-          value={interestRate}
+          value={interest_rate}
           label="Interest Rate"
           adornmentType="%"
-          onChange={e => setState('interestRate', e.target.value)}
+          onChange={e => setState('interest_rate', e.target.value)}
         />
-        {/* closingCosts,
-      repairCosts,
+        {/* closing_costs,
+      repair_costs,
       propertyTax,
-      totalInsurance,
+      total_insurance,
       hoaFee, */}
 
-        <CustomTextField value={loanTerm} label="Loan Term" onChange={e => setState('loanTerm', e.target.value)} />
+        <CustomTextField value={loan_term} label="Loan Term" onChange={e => setState('loan_term', e.target.value)} />
         <CustomTextField
           adornmentType="$"
-          value={closingCosts}
+          value={closing_costs}
           label="Closing Costs"
-          onChange={e => setState('closingCosts', e.target.value)}
+          onChange={e => setState('closing_costs', e.target.value)}
         />
         <CustomTextField
           adornmentType="$"
-          value={repairCosts}
+          value={repair_costs}
           label="Repair Costs"
-          onChange={e => setState('repairCosts', e.target.value)}
+          onChange={e => setState('repair_costs', e.target.value)}
         />
       </Container>
     );

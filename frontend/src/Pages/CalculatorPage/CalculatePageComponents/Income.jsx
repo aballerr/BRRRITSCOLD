@@ -14,22 +14,22 @@ const Container = styled.div`
 class Income extends Component {
   render() {
     const { PropertyStore } = this.props;
-    const { otherMontlyIncome, monthlyGrossRent, setState } = PropertyStore;
+    const { other_monthly_income, monthly_gross_rent, setState } = PropertyStore;
 
     return (
       <Container>
         <h4>Monthly Income</h4>
         <CustomTextField
           adornmentType="$"
-          value={monthlyGrossRent}
+          value={monthly_gross_rent}
           label="Monthly Rent"
-          onChange={e => setState('monthlyGrossRent', e.target.value)}
+          onChange={e => setState('monthly_gross_rent', e.target.value)}
         />
         <CustomTextField
           adornmentType="$"
-          value={otherMontlyIncome}
+          value={other_monthly_income}
           label="Other Income"
-          onChange={e => setState('otherMontlyIncome', e.target.value)}
+          onChange={e => setState('other_monthly_income', e.target.value)}
         />
       </Container>
     );

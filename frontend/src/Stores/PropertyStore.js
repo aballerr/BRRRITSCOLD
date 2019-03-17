@@ -4,42 +4,43 @@ class PropertyStore {
   id = Math.random();
 
   // Property Info
-  @observable propertyStreet = '';
-  @observable propertyNumber = '';
-  @observable propertyCity = '';
-  @observable propertyState = '';
-  @observable propertyZip = '';
-  @observable mlsNumber = '';
+  @observable property_type = '';
+  @observable property_street = '';
+  @observable property_number = '';
+  @observable property_city = '';
+  @observable property_state = '';
+  @observable property_zip = '';
+  @observable mls_number = '';
   @observable description = '';
 
   @observable bedrooms = 0;
   @observable bathrooms = 0;
-  @observable totalSquareFeet = 1000;
-  @observable lotSizeSquareFeet = 2000;
-  @observable yearBuilt = 1900;
+  @observable total_square_feet = 1000;
+  @observable lot_size_square_feet = 2000;
+  @observable year_built = 1900;
   @observable units = 2;
-  @observable heatingType = '';
-  @observable coolingType = '';
-  @observable wiringCondition = '';
-  @observable plumbingCondition = '';
-  @observable parkingType = '';
+  @observable heating_type = '';
+  @observable cooling_type = '';
+  @observable wiring_condition = '';
+  @observable plumbing_condition = '';
+  @observable parking_type = '';
 
   // Property Numbers
-  @observable purchasePrice = 100000;
-  @observable afterRepairValue = 120000;
-  @observable downPayment = 20;
-  @observable interestRate = 4.5;
-  @observable loanTerm = 30;
-  @observable closingCosts = 3000;
-  @observable repairCosts = 1000;
-  @observable propertyTax = 1500;
-  @observable totalInsurance = 800;
-  @observable hoaFee = 0;
+  @observable purchase_price = 100000;
+  @observable after_repair_value = 120000;
+  @observable down_payment = 20;
+  @observable interest_rate = 4.5;
+  @observable loan_term = 30;
+  @observable closing_costs = 3000;
+  @observable repair_costs = 1000;
+  @observable property_tax = 1500;
+  @observable total_insurance = 800;
+  @observable hoa_fee = 0;
   @observable maitenance = 0;
 
   // Rental Numbers
-  @observable monthlyGrossRent = 1000;
-  @observable otherMontlyIncome = 0;
+  @observable monthly_gross_rent = 1000;
+  @observable other_monthly_income = 0;
   @observable electricity = 0;
   @observable water = 0;
   @observable garbage = 0;
@@ -47,11 +48,11 @@ class PropertyStore {
   @observable hoa = 0;
   @observable pmi = 0;
   @observable vacancy = 5;
-  @observable propertyManagementFee = 10;
-  @observable propertyManagementPlacementFee = 0;
-  @observable capEX = 0;
-  @observable maitenanceRule = '';
-  @observable customMaitenanceValue = 0;
+  @observable property_management_fee = 10;
+  @observable property_management_placement_fee = 0;
+  @observable cap_ex = 0;
+  @observable maintenance_rule = '';
+  @observable custom_maintenance_rule = 0;
 
   @action setState = (key, value) => {
     this[key] = value;
@@ -63,16 +64,20 @@ class PropertyStore {
     parseInt(this['garbage']) +
     parseInt(this['lawn']) +
     parseInt(this['hoa']) +
-    parseInt(this['capEX']) +
-    parseInt(this['customMaitenanceValue']) +
+    parseInt(this['cap_ex']) +
+    parseInt(this['custom_maintenance_rule']) +
     this.monthlyMortgagePayments();
-  // (this['propertyManagementFee'] / 100) * this['monthlyGrossRent'];
+  // (this['property_management_fee'] / 100) * this['monthly_gross_rent'];
 
   annualExpenses = () =>
-    this['propertyTax'] + this['totalInsurance'] + (this['vacancy'] / 100) * this['monthlyGrossRent'] * 12 + this.monthlyExpenses() * 12;
+    this['property_tax'] +
+    this['total_insurance'] +
+    (this['vacancy'] / 100) * this['monthly_gross_rent'] * 12 +
+    this.monthlyExpenses() * 12;
 
   calculateReturns = () => {
-    const annualIncome = this['monthlyGrossRent'] * 12 + this['otherMontlyIncome'] * 12;
+    console.log(`Monthly Maintenance: ${this['custom_maintenance_rule']}`);
+    const annualIncome = this['monthly_gross_rent'] * 12 + this['other_monthly_income'] * 12;
     const annualExpenses = this.annualExpenses();
     const annualCashFlow = annualIncome - annualExpenses;
 
@@ -84,11 +89,13 @@ class PropertyStore {
 
   // https://www.mtgprofessor.com/formulas.htm
   monthlyMortgagePayments = () => {
-    let principal = this['purchasePrice'] - this['purchasePrice'] * (this['downPayment'] / 100);
-    let r = this['interestRate'] / 100 / 12;
-    let numPayments = this['loanTerm'] * 12;
+    let principal = this['purchase_price'] - this['purchase_price'] * (this['down_payment'] / 100);
+    let r = this['interest_rate'] / 100 / 12;
+    let numPayments = this['loan_term'] * 12;
     let numer = r * Math.pow(1 + r, numPayments);
     let denom = Math.pow(1 + r, numPayments) - 1;
+
+    if (denom === 0) return 0;
 
     return principal * (numer / denom);
   };

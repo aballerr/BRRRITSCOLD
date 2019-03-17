@@ -14,22 +14,22 @@ const Container = styled.div`
 class MontlyExpenses extends Component {
   render() {
     const { PropertyStore } = this.props;
-    const { hoa, electricity, water, garbage, lawn, capEX, customMaitenanceValue, setState } = PropertyStore;
+    const { hoa, electricity, water, garbage, lawn, cap_ex, custom_maintenance_rule, setState } = PropertyStore;
 
     return (
       <Container>
         <h4>Monthly Expenses</h4>
         <CustomTextField
           adornmentType="$"
-          value={capEX}
+          value={cap_ex}
           label="Capital Expenditure Savings"
-          onChange={e => setState('capEX', e.target.value)}
+          onChange={e => setState('cap_ex', e.target.value)}
         />
         <CustomTextField
           adornmentType="$"
-          value={customMaitenanceValue}
+          value={custom_maintenance_rule}
           label="Monthly Maintenance"
-          onChange={e => setState('customMaitenanceValue', e.target.value)}
+          onChange={e => setState('custom_maintenance_rule', e.target.value)}
         />
         <CustomTextField adornmentType="$" value={hoa} label="HOA Fee" onChange={e => setState('hoa', e.target.value)} />
         <CustomTextField adornmentType="$" value={electricity} label="Electric" onChange={e => setState('electricity', e.target.value)} />

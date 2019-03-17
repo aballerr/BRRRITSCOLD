@@ -3,7 +3,7 @@ import { observable, action } from 'mobx';
 class PropertyStore {
   id = Math.random();
 
-  // Property Info
+  // Property Information
   @observable property_type = '';
   @observable property_street = '';
   @observable property_number = '';

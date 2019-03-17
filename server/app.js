@@ -1,19 +1,24 @@
 const app = require('express')();
 const bodyParser = require('body-parser');
-
-const serviceDb = require('./services/serviceDb');
+const controllers = require('./controllers/index');
+const serviceDb = require('./services/service-db');
 
 const PORT = 3000;
 
-serviceDb.fpInit();
+async function main() {
+  // await serviceDb.fpInit();
+  // await serviceDb.addCity({ city_name: 'Hagerstown' });
+  // await serviceDb.addProperty({
+  //   property_street: 'Northh Mulbadsferry Stadsfreet',
+  //   property_number: '12aasdfsdf34',
+  //   city_name: 'Hagerstown',
+  // });
+}
+
+main();
 
 app.use(bodyParser.json());
-
-// City.sync({}).then(() => {
-//   return City.create({
-//     city_name: 'Hagerstown'
-//   })
-// });
+app.use('/api', controllers);
 
 app.get('/', (req, res) => {
   console.log('request received');

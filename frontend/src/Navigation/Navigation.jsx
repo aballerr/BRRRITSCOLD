@@ -13,6 +13,7 @@ const Link = styled.a`
   position: relative;
   right: 0;
   float: right;
+  margin-right: 20px;
 `;
 
 const styles = {
@@ -37,6 +38,11 @@ function DenseAppBar(props) {
       <AppBar position="relative">
         <Toolbar className={classes.appBar}>
           <div style={{ flexGrow: 1 }} />
+          <Link href="/properties">
+            <Typography variant="h6" color="inherit">
+              Properties
+            </Typography>
+          </Link>
           <Link href="/calculator">
             <Typography variant="h6" color="inherit">
               Calculator

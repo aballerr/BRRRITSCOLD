@@ -33,10 +33,8 @@ class PropertyValue extends Component {
       loan_term,
       closing_costs,
       repair_costs,
-      total_insurance,
       setState,
     } = PropertyStore;
-    console.log(total_insurance);
 
     return (
       <Container>
@@ -65,11 +63,6 @@ class PropertyValue extends Component {
           adornmentType="%"
           onChange={e => setState('interest_rate', e.target.value)}
         />
-        {/* closing_costs,
-      repair_costs,
-      propertyTax,
-      total_insurance,
-      hoaFee, */}
 
         <CustomTextField value={loan_term} label="Loan Term" onChange={e => setState('loan_term', e.target.value)} />
         <CustomTextField

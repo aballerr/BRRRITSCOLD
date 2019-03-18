@@ -6,13 +6,13 @@ const serviceDb = require('./services/service-db');
 const PORT = 3000;
 
 async function main() {
-  // await serviceDb.fpInit();
-  // await serviceDb.addCity({ city_name: 'Hagerstown' });
-  // await serviceDb.addProperty({
-  //   property_street: 'Northh Mulbadsferry Stadsfreet',
-  //   property_number: '12aasdfsdf34',
-  //   city_name: 'Hagerstown',
-  // });
+  await serviceDb.fpInit();
+  await serviceDb.addCity({ city_name: 'Hagerstown' });
+  await serviceDb.addProperty({
+    property_street: 'north',
+    property_number: '123',
+    property_city: 'Hagerstown',
+  });
 }
 
 main();

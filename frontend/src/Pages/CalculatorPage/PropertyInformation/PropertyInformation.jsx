@@ -5,7 +5,12 @@ import styled from 'styled-components';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 const InformationWrap = styled.div`
-  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 40px;
+  :first-child {
+    margin-left: 40px;
+  }
 `;
 
 @inject('PropertyStore')
@@ -36,7 +41,7 @@ class PropertyInformation extends Component {
     } = PropertyStore;
 
     return (
-      <div>
+      <div style={{ display: 'flex' }}>
         <InformationWrap>
           <h4>Location</h4>
           <CustomTextField value={property_number} label="Property Number" onChange={e => setState('property_number', e.target.value)} />

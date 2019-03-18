@@ -16,8 +16,8 @@ serviceThis.fpInit = async () => {
       serviceThis.City = models.City(sequelize, Sequelize);
       serviceThis.Property = models.Property(sequelize, Sequelize);
       serviceThis.Property.associate(serviceThis.City);
-      await serviceThis.City.sync();
-      await serviceThis.Property.sync();
+      await serviceThis.City.sync({ force: true });
+      await serviceThis.Property.sync({ force: true });
       return Promise.resolve('Succesfully initialize');
     })
     .catch(err => {
@@ -35,11 +35,35 @@ serviceThis.addCity = city => {
   });
 };
 
+/**
+ * Queries all properties with either the specific address or street
+ * @param { Object } params
+ */
+serviceThis.getProperties = params => {
+  const { property_street, property_number } = params;
+
+  if (property_street !== undefined && property_number !== undefined)
+    return serviceThis.Property.findAll({ raw: true, where: { property_street, property_number } });
+  return serviceThis.Property.findAll({ raw: true, where: { property_street } });
+};
+
+/**
+ * Queries by the property id
+ * @param { Number } id
+ */
+serviceThis.getPropertyById = id => serviceThis.Property.findOne({ raw: true, where: { id: id } });
+
+/**
+ * Finds or creates a property based on street and number
+ * @param { Object } property
+ */
 serviceThis.addProperty = property => {
+  const { property_street, property_number } = property;
+
   return serviceThis.Property.findOrCreate({
     where: {
-      property_street: property.property_street,
-      property_number: property.property_number,
+      property_street,
+      property_number,
     },
     defaults: property,
   });

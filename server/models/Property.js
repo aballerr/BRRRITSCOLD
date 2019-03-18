@@ -69,7 +69,11 @@ module.exports = (sequelize, DataTypes) => {
 
   Property.associate = City => {
     Property.belongsTo(City, {
-      foreignKey: 'city_name',
+      foreignKey: {
+        name: 'property_city',
+        allowNull: false,
+      },
+
       targetKey: 'city_name',
     });
   };

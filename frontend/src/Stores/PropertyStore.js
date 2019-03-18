@@ -76,7 +76,6 @@ class PropertyStore {
     this.monthlyExpenses() * 12;
 
   calculateReturns = () => {
-    console.log(`Monthly Maintenance: ${this['custom_maintenance_rule']}`);
     const annualIncome = this['monthly_gross_rent'] * 12 + this['other_monthly_income'] * 12;
     const annualExpenses = this.annualExpenses();
     const annualCashFlow = annualIncome - annualExpenses;

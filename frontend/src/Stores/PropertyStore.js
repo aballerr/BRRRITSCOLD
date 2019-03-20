@@ -2,6 +2,7 @@ import { observable, action, toJS } from 'mobx';
 
 class PropertyStore {
   // Property Information
+  id = 0;
   @observable property_type = '';
   @observable property_street = '';
   @observable property_number = '';
@@ -95,6 +96,15 @@ class PropertyStore {
     if (denom === 0) return 0;
 
     return principal * (numer / denom);
+  };
+
+  initialize = property => {
+    let keys = Object.keys(property);
+    for (let key of keys) {
+      let value = property[key] === null ? this[key] : property[key];
+      this[key] = value;
+    }
+    console.log(this.getProperty());
   };
 
   getProperty = () => {

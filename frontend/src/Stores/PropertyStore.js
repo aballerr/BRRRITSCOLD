@@ -1,8 +1,6 @@
-import { observable, action } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 
 class PropertyStore {
-  id = Math.random();
-
   // Property Information
   @observable property_type = '';
   @observable property_street = '';
@@ -97,6 +95,16 @@ class PropertyStore {
     if (denom === 0) return 0;
 
     return principal * (numer / denom);
+  };
+
+  getProperty = () => {
+    let property = toJS(this);
+    delete property.annualExpenses;
+    delete property.monthlyExpenses;
+    delete property.monthlyMortgagePayments;
+    delete property.calculateReturns;
+    delete property.getProperty;
+    return property;
   };
 }
 

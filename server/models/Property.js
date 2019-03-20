@@ -71,7 +71,6 @@ module.exports = (sequelize, DataTypes) => {
     Property.belongsTo(City, {
       foreignKey: {
         name: 'property_city',
-        allowNull: false,
       },
 
       targetKey: 'city_name',

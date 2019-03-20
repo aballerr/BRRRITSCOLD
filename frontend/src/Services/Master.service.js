@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 class MasterService {
-  constructor() {
+  constructor(url) {
     const base_url = `${process.env.REACT_APP_BASE_URL}${url}`;
     this.axios = axios.create({
       baseURL: base_url,
@@ -12,8 +12,8 @@ class MasterService {
     return this.axios.get();
   }
 
-  post() {
-    return this.axios.post();
+  post(body) {
+    return this.axios.post('', body);
   }
 
   put() {

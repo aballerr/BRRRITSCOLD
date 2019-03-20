@@ -2,8 +2,9 @@ const router = require('express').Router();
 const serviceDb = require('../services/service-db');
 
 router.post('', async (req, res) => {
-  await serviceDb.addProperty(req.body);
-  res.send('done');
+  let property = await serviceDb.createNewProperty(req.body≥÷);
+
+  res.send({ id: property.dataValues.id });
 });
 
 router.get('', async (req, res) => {

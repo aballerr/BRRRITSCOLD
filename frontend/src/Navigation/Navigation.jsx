@@ -38,7 +38,7 @@ function DenseAppBar(props) {
       <AppBar position="relative">
         <Toolbar className={classes.appBar}>
           <div style={{ flexGrow: 1 }} />
-          <Link href="/properties">
+          <Link href="/add-property">
             <Typography variant="h6" color="inherit">
               Properties
             </Typography>

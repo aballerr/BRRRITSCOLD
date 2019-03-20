@@ -1,5 +1,6 @@
 const app = require('express')();
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const controllers = require('./controllers/index');
 const serviceDb = require('./services/service-db');
 
@@ -18,6 +19,7 @@ async function main() {
 main();
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use('/api', controllers);
 
 app.get('/', (req, res) => {

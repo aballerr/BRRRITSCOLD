@@ -43,7 +43,7 @@ serviceThis.getProperties = params => {
   const { property_street, property_number } = params;
 
   if (property_street !== undefined && property_number !== undefined)
-    return serviceThis.Property.findAll({ raw: true, where: { property_street, property_number } });
+    return serviceThis.Property.findAll({ raw: true, where: { property_street: property_street, property_number: property_number } });
   return serviceThis.Property.findAll({ raw: true, where: { property_street } });
 };
 
@@ -52,6 +52,11 @@ serviceThis.getProperties = params => {
  * @param { Number } id
  */
 serviceThis.getPropertyById = id => serviceThis.Property.findOne({ raw: true, where: { id: id } });
+
+/**
+ * Generates a new property
+ */
+serviceThis.createNewProperty = property => serviceThis.Property.findOrCreate(property);
 
 /**
  * Finds or creates a property based on street and number

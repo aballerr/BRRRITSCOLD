@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import PropertyCalculator from '../PropertyCalculator/PropertyCalculator';
 import PropertyStore from '../../Stores/PropertyStore';
-import { Provider } from 'mobx-react';
+import { Provider, observer } from 'mobx-react';
 import PropertyService from '../../Services/Property.service';
 import CustomTextField from '../PropertyCalculator/CalculatePageComponents/CustomTextField';
 
+@observer
 class AddPropertyPage extends Component {
   constructor() {
     super();
@@ -24,21 +25,33 @@ class AddPropertyPage extends Component {
 
   findOrCreateProperty = () => {
     let property = Object.assign({}, this.state);
+
     delete property.foundOrCreated;
     this.propertyService.post(property).then(response => {
+      console.log(response.data[0]);
       this.propertyStore.initialize(response.data[0]);
+      this.setState({ foundOrCreated: true });
     });
-    // this.setState({ foundOrCreated: true });
   };
 
-  submit = () => {
+  update = () => {
     let property = this.propertyStore.getProperty();
     this.propertyService
-      .post(property)
+      .put(property)
       .then(response => {
         console.log(response.data);
       })
       .catch(err => console.log('an error occured'));
+  };
+
+  clear = () => {
+    let tempStore = new PropertyStore();
+    this.propertyStore.initialize(tempStore.getProperty());
+    this.setState({
+      property_number: '',
+      property_street: '',
+      foundOrCreated: false,
+    });
   };
 
   render() {
@@ -49,8 +62,12 @@ class AddPropertyPage extends Component {
         <Provider PropertyStore={this.propertyStore}>
           <>
             <div style={{ marginBottom: 30 }}>
-              <CustomTextField value={this.state.property_number} onChange={this.onChange('property_number')} label="Number" />
-              <CustomTextField value={this.state.property_street} onChange={this.onChange('property_street')} label="Street" />
+              {!foundOrCreated ? (
+                <>
+                  <CustomTextField value={this.state.property_number} onChange={this.onChange('property_number')} label="Number" />
+                  <CustomTextField value={this.state.property_street} onChange={this.onChange('property_street')} label="Street" />
+                </>
+              ) : null}
 
               {!foundOrCreated ? (
                 <Button
@@ -62,13 +79,18 @@ class AddPropertyPage extends Component {
                   Find or Add Property
                 </Button>
               ) : (
-                <Button color="primary" variant="outlined" onClick={this.submit}>
-                  Update
-                </Button>
+                <>
+                  <Button color="primary" variant="outlined" onClick={this.update}>
+                    Update
+                  </Button>
+                  <Button onClick={this.clear} style={{ marginLeft: 20 }} color="secondary" variant="contained">
+                    Clear!
+                  </Button>
+                </>
               )}
             </div>
-
             <PropertyCalculator />
+            {/* {foundOrCreated ? <PropertyCalculator /> : null} */}
           </>
         </Provider>
       </div>

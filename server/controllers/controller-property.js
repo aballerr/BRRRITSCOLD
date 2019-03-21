@@ -8,6 +8,11 @@ router.post('', async (req, res) => {
   res.send(property);
 });
 
+router.put('', async (req, res) => {
+  let update = await serviceDb.updateProperty(req.body);
+  res.send('success');
+});
+
 router.get('', async (req, res) => {
   let properties = await serviceDb.getProperties(req.query);
   res.send(properties);

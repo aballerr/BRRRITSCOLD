@@ -59,6 +59,12 @@ serviceThis.getPropertyById = id => serviceThis.Property.findOne({ raw: true, wh
 serviceThis.createNewProperty = property => serviceThis.Property.findOrCreate(property);
 
 /**
+ * Updates the Property
+ * @param { property}
+ */
+serviceThis.updateProperty = property => serviceThis.Property.update(property, { where: { id: property.id } });
+
+/**
  * Finds or creates a property based on street and number
  * @param { Object } property
  */
@@ -73,5 +79,18 @@ serviceThis.addProperty = property => {
     defaults: property,
   });
 };
+
+serviceThis.addCity = city =>
+  serviceThis.City.findOrCreate({
+    where: {
+      city_name: city.city_name,
+    },
+    defaults: city,
+  });
+
+serviceThis.updateCity = city => serviceThis.City.update(city, { where: { id: city.id } });
+
+//Gets all currently existing cities
+serviceThis.getCities = () => serviceThis.City.findAll();
 
 module.exports = serviceThis;

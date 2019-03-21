@@ -98,13 +98,13 @@ class PropertyStore {
     return principal * (numer / denom);
   };
 
-  initialize = property => {
+  @action initialize = property => {
     let keys = Object.keys(property);
+
     for (let key of keys) {
       let value = property[key] === null ? this[key] : property[key];
       this[key] = value;
     }
-    console.log(this.getProperty());
   };
 
   getProperty = () => {

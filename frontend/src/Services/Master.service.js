@@ -16,8 +16,8 @@ class MasterService {
     return this.axios.post('', body);
   }
 
-  put() {
-    return this.axios.put();
+  put(body) {
+    return this.axios.put('', body);
   }
 }
 

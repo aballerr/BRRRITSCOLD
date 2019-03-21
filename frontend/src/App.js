@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CalculatorPage from './Pages/CalculatorPage/CalculatorPage';
 import AddPropertyPage from './Pages/AddPropertyPage/AddPropertyPage';
 import styled from 'styled-components';
+import AddCityPage from './Pages/AddCityPage/AddCityPage';
 
 const Container = styled.div`
   width: 97%;
@@ -21,6 +22,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/calculator" component={CalculatorPage} />
             <Route exact path="/add-property" component={AddPropertyPage} />
+            <Route exact path="/add-city" component={AddCityPage} />
           </Switch>
         </Router>
       </Container>

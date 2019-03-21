@@ -3,7 +3,6 @@ import { Provider } from 'mobx-react';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import CustomTextField from './CalculatePageComponents/CustomTextField';
-import PropertyStore from '../../Stores/PropertyStore';
 import PropertyValue from './CalculatePageComponents/PropertyValue';
 import AnnualExpenses from './CalculatePageComponents/AnnualExpenses';
 import MontlyExpenses from './CalculatePageComponents/MontlyExpenses';

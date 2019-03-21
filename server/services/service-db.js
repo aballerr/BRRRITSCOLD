@@ -79,7 +79,6 @@ serviceThis.addProperty = property => {
     defaults: property,
   });
 };
-
 serviceThis.addCity = city =>
   serviceThis.City.findOrCreate({
     where: {
@@ -88,7 +87,7 @@ serviceThis.addCity = city =>
     defaults: city,
   });
 
-serviceThis.updateCity = city => serviceThis.City.update(city, { where: { id: city.id } });
+serviceThis.updateCity = city => serviceThis.City.update(city, { where: { name: city.city_name } });
 
 //Gets all currently existing cities
 serviceThis.getCities = () => serviceThis.City.findAll();

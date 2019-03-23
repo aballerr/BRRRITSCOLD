@@ -57,25 +57,48 @@ class PropertyStore {
     this[key] = value;
   };
 
+  /**
+   * params get set to string through set state, this deals with all issues
+   * from having no param or the param being set as a string.. etc
+   * @param { Key }
+   */
+  getNumber = key => {
+    let val = this[key];
+
+    if (typeof val === 'string') {
+      if (val.length === 0) {
+        this.setState(key, 0);
+        return 0;
+      } else return parseFloat(val);
+    }
+    return val;
+  };
+
+  toPercent = number => this.getNumber(number) / 100;
+
+  monthlyManagementFee = () =>
+    this.getNumber('monthly_gross_rent') * (1 - this.toPercent('vacancy')) * this.toPercent('property_management_fee');
+
   monthlyExpenses = () =>
-    parseInt(this['electricity']) +
-    parseInt(this['water']) +
-    parseInt(this['garbage']) +
-    parseInt(this['lawn']) +
-    parseInt(this['hoa']) +
-    parseInt(this['cap_ex']) +
-    parseInt(this['custom_maintenance_rule']) +
+    this.getNumber('electricity') +
+    this.getNumber('water') +
+    this.getNumber('garbage') +
+    this.getNumber('lawn') +
+    this.getNumber('hoa') +
+    this.getNumber('cap_ex') +
+    this.getNumber('custom_maintenance_rule') +
+    this.monthlyManagementFee() +
     this.monthlyMortgagePayments();
-  // (this['property_management_fee'] / 100) * this['monthly_gross_rent'];
 
   annualExpenses = () =>
-    this['property_tax'] +
-    this['total_insurance'] +
-    (this['vacancy'] / 100) * this['monthly_gross_rent'] * 12 +
+    this.getNumber('property_tax') +
+    this.getNumber('total_insurance') +
+    this.getNumber('property_management_placement_fee') +
+    this.toPercent('vacancy') * this.getNumber('monthly_gross_rent') * 12 +
     this.monthlyExpenses() * 12;
 
   calculateReturns = () => {
-    const annualIncome = this['monthly_gross_rent'] * 12 + this['other_monthly_income'] * 12;
+    const annualIncome = this.getNumber('monthly_gross_rent') * 12 + this.getNumber('other_monthly_income') * 12;
     const annualExpenses = this.annualExpenses();
     const annualCashFlow = annualIncome - annualExpenses;
 
@@ -87,15 +110,13 @@ class PropertyStore {
 
   // https://www.mtgprofessor.com/formulas.htm
   monthlyMortgagePayments = () => {
-    let principal = this['purchase_price'] - this['purchase_price'] * (this['down_payment'] / 100);
-    let r = this['interest_rate'] / 100 / 12;
-    let numPayments = this['loan_term'] * 12;
+    let principal = this.getNumber('purchase_price') - this.getNumber('purchase_price') * this.toPercent('down_payment');
+    let r = this.toPercent('interest_rate') / 12;
+    let numPayments = this.getNumber('loan_term') * 12;
     let numer = r * Math.pow(1 + r, numPayments);
     let denom = Math.pow(1 + r, numPayments) - 1;
 
-    if (denom === 0) return 0;
-
-    return principal * (numer / denom);
+    return denom === 0 ? 0 : principal * (numer / denom);
   };
 
   @action initialize = property => {
